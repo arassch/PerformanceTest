@@ -49,11 +49,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_series = new QLineSeries();
 
-    m_chart = new QChart();
-    m_chart->legend()->hide();
-    m_chart->addSeries(m_series);
-    m_chart->createDefaultAxes();
-    m_chart->setTitle("Simple line chart example");
+
 
     QLineSeries* originalSeries = new QLineSeries();
     std::ifstream fin("/Users/sarac.schvartzman/Dropbox/Code/Crytek/results/original.txt");
@@ -67,7 +63,18 @@ MainWindow::MainWindow(QWidget *parent) :
         i++;
     }
 
+    m_chart = new QChart();
+    m_chart->legend()->hide();
     m_chart->addSeries(originalSeries);
+    m_chart->addSeries(m_series);
+    m_chart->createDefaultAxes();
+    m_chart->setTitle("Simple line chart example");
+
+    m_chart->axisX()->setRange(0,m_maxFrame);
+    m_chart->axisY()->setRange(0,m_maxTime);
+
+
+
 
     ui->chart->setChart(m_chart);
     ui->chart->setRenderHint(QPainter::Antialiasing);
